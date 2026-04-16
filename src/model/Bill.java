@@ -1,13 +1,12 @@
 package model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Bill {
     private int id;
     private LocalDateTime exitTime;
     private ParkingTicket parkingTicket;
-    private ParkingGate parkingGate;
+    private ParkingGate exitGate;
     private Operator operator;
     private double amount;
     private Payment payment;
@@ -24,6 +23,19 @@ public class Bill {
         return exitTime;
     }
 
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id=" + id +
+                ", exitTime=" + exitTime +
+                ", parkingTicket=" + parkingTicket +
+                ", exitGate=" + exitGate +
+                ", operator=" + operator +
+                ", amount=" + amount +
+                ", payment=" + payment +
+                '}';
+    }
+
     public void setExitTime(LocalDateTime exitTime) {
         this.exitTime = exitTime;
     }
@@ -36,12 +48,12 @@ public class Bill {
         this.parkingTicket = parkingTicket;
     }
 
-    public ParkingGate getParkingGate() {
-        return parkingGate;
+    public ParkingGate getExitGate() {
+        return exitGate;
     }
 
-    public void setParkingGate(ParkingGate parkingGate) {
-        this.parkingGate = parkingGate;
+    public void setExitGate(ParkingGate exitGate) {
+        this.exitGate = exitGate;
     }
 
     public Operator getOperator() {

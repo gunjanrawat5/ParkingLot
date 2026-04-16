@@ -6,6 +6,7 @@ import model.ParkingLot;
 import model.ParkingTicket;
 import model.constants.ParkingSpotTier;
 import repository.*;
+import service.BillService;
 import service.ParkingLotService;
 import service.TicketService;
 
@@ -25,9 +26,11 @@ public class Main {
 
         TicketService ticketService = new TicketService(parkingGateRepository,parkingTicketRepository,parkingSpotRepository,parkingLotRepository,vehicleRepository);
 
+        BillService billService = new BillService(parkingTicketRepository,billRepository,parkingGateRepository,parkingSpotRepository,parkingLotRepository);
+
         ParkingLotController parkingLotController = new ParkingLotController(parkingLotService);
         TicketController ticketController = new TicketController(ticketService);
-        BillController billController = new BillController();
+        BillController billController = new BillController(billService);
 
         ParkingLot parkingLot = parkingLotController.intialiseParkingLot(2,10);
         parkingLotController.displayParkingLot(parkingLot);
@@ -55,10 +58,8 @@ public class Main {
             } else{
                 System.out.println("Please enter your ticketId");
                 int ticketId = sc.nextInt();
-                Bill bill = parkingLotController.generateBill(ticketId,2);
+                Bill bill = billController.generateBill(parkingLot,ticketId,2);
                 billController.displayBillDetails(bill);
-                System.out.println("Choose payment mode - 1. Cash and 2. Online ");
-                int paymentMode = sc.nextInt();
                 //generate bill object with payment
                 parkingLotController.displayParkingLot(parkingLot);
 

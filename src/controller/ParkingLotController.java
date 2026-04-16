@@ -23,9 +23,7 @@ public class ParkingLotController {
         return true;
     }
 
-    public Bill generateBill(int ticketId, int exitGateId){
-        return null;
-    }
+
 
     public Bill billPayment(Bill bill){
         return null;
