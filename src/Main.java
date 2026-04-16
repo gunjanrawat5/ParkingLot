@@ -7,6 +7,7 @@ import model.ParkingTicket;
 import model.constants.ParkingSpotTier;
 import repository.*;
 import service.ParkingLotService;
+import service.TicketService;
 
 import java.util.Scanner;
 
@@ -22,8 +23,10 @@ public class Main {
 
         ParkingLotService parkingLotService = new ParkingLotService(parkingLotRepository,parkingFloorRepository, parkingSpotRepository, parkingGateRepository);
 
+        TicketService ticketService = new TicketService(parkingGateRepository,parkingTicketRepository,parkingSpotRepository,parkingLotRepository,vehicleRepository);
+
         ParkingLotController parkingLotController = new ParkingLotController(parkingLotService);
-        TicketController ticketController = new TicketController();
+        TicketController ticketController = new TicketController(ticketService);
         BillController billController = new BillController();
 
         ParkingLot parkingLot = parkingLotController.intialiseParkingLot(2,10);
@@ -43,8 +46,9 @@ public class Main {
                 if(parkingLotController.isSlotAvailable()){
                     System.out.println("Please enter vehicle number");
                     String number = sc.next();
-                    ParkingTicket ticket = parkingLotController.generateTicket(number, ParkingSpotTier.NORMAL,1);
+                    ParkingTicket ticket = ticketController.generateTicket(number,parkingLot, ParkingSpotTier.NORMAL,1);
                     ticketController.displayTicketDetails(ticket);
+                    parkingLotController.displayParkingLot(parkingLot);
                 } else{
                     System.out.println("Parking lot is full, please try again later");
                 }
@@ -56,7 +60,8 @@ public class Main {
                 System.out.println("Choose payment mode - 1. Cash and 2. Online ");
                 int paymentMode = sc.nextInt();
                 //generate bill object with payment
-                parkingLotController.displayParkingLotStatus();
+                parkingLotController.displayParkingLot(parkingLot);
+
             }
         }
 

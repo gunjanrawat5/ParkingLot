@@ -4,6 +4,8 @@ import exception.VehicleNotFoundException;
 import model.Vehicle;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class VehicleRepository {
     private HashMap<Integer, Vehicle> VehicleMap;
@@ -45,5 +47,14 @@ public class VehicleRepository {
         else{
             throw new VehicleNotFoundException("Vehicle with given id does not exist");
         }
+    }
+    public Vehicle getVehicleByNumber(String vehicleNumber){
+        Set<Map.Entry<Integer,Vehicle>>vehicleSet = VehicleMap.entrySet();
+        for(Map.Entry<Integer,Vehicle> entry : vehicleSet){
+            if(entry.getValue().getVehicleNumber().equals(vehicleNumber)){
+                return entry.getValue();
+            }
+        }
+        throw new VehicleNotFoundException("Vehicle details not found");
     }
 }

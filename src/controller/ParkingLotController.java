@@ -23,14 +23,6 @@ public class ParkingLotController {
         return true;
     }
 
-    public ParkingTicket generateTicket(Vehicle vehicle, ParkingSpotTier parkingSpotTier, int parkingGateId){
-        return null;
-    }
-
-    public ParkingTicket generateTicket(String vehicleNumber, ParkingSpotTier parkingSpotTier, int parkingGateId){
-        return null;
-    }
-
     public Bill generateBill(int ticketId, int exitGateId){
         return null;
     }
@@ -39,9 +31,6 @@ public class ParkingLotController {
         return null;
     }
 
-    public void displayParkingLotStatus(){
-        return;
-    }
 
     public ParkingLot intialiseParkingLot(int noOfFloors, int noOfSpotsOnAFloor){
         return  parkingLotService.intialiseParkingLot(noOfFloors, noOfSpotsOnAFloor);

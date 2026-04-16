@@ -28,7 +28,7 @@ public class ParkingLotService {
     }
 
     public ParkingLot intialiseParkingLot(int noOfFloors, int noOfSpotsOnAFloor){
-        Operator operator = new Operator(1,"Operator","op1@gmail.com");
+        Operator operator = new Operator(1,"operator1@gmail.com","Opeartor");
         ParkingLot parkingLot = new ParkingLot();
         parkingLot.setName("Parking Lot 1");
         parkingLot.setAddress("200 ABC Ave, Jersey City,54671");
@@ -96,6 +96,7 @@ public class ParkingLotService {
             System.out.println();
             System.out.println("------------------------------------");
         }
+        System.out.println("Available slots - " + parkingLot.getAvailableSlots());
     }
 
 }
