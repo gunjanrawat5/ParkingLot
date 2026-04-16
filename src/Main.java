@@ -2,9 +2,11 @@ import controller.BillController;
 import controller.ParkingLotController;
 import controller.TicketController;
 import model.Bill;
+import model.ParkingLot;
 import model.ParkingTicket;
 import model.constants.ParkingSpotTier;
 import repository.*;
+import service.ParkingLotService;
 
 import java.util.Scanner;
 
@@ -18,9 +20,16 @@ public class Main {
         ParkingTicketRepository parkingTicketRepository = new ParkingTicketRepository();
         VehicleRepository vehicleRepository = new VehicleRepository();
 
-        ParkingLotController parkingLotController = new ParkingLotController();
+        ParkingLotService parkingLotService = new ParkingLotService(parkingLotRepository,parkingFloorRepository, parkingSpotRepository, parkingGateRepository);
+
+        ParkingLotController parkingLotController = new ParkingLotController(parkingLotService);
         TicketController ticketController = new TicketController();
         BillController billController = new BillController();
+
+        ParkingLot parkingLot = parkingLotController.intialiseParkingLot(2,10);
+        parkingLotController.displayParkingLot(parkingLot);
+
+
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome to the parking lot");

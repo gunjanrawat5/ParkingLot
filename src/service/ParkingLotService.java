@@ -15,13 +15,16 @@ import java.util.List;
 
 public class ParkingLotService {
 
-    ParkingLotRepository parkingLotRepository = new ParkingLotRepository();
-    ParkingFloorRepository parkingFloorRepository = new ParkingFloorRepository();
-    ParkingSpotRepository parkingSpotRepository = new ParkingSpotRepository();
-    ParkingGateRepository parkingGateRepository = new ParkingGateRepository();
+    ParkingLotRepository parkingLotRepository;
+    ParkingFloorRepository parkingFloorRepository;
+    ParkingSpotRepository parkingSpotRepository;
+    ParkingGateRepository parkingGateRepository;
 
-    public ParkingLotService(ParkingLotRepository parkingLotRepository) {
+    public ParkingLotService(ParkingLotRepository parkingLotRepository, ParkingFloorRepository parkingFloorRepository, ParkingSpotRepository parkingSpotRepository, ParkingGateRepository parkingGateRepository) {
         this.parkingLotRepository = parkingLotRepository;
+        this.parkingFloorRepository = parkingFloorRepository;
+        this.parkingSpotRepository = parkingSpotRepository;
+        this.parkingGateRepository = parkingGateRepository;
     }
 
     public ParkingLot intialiseParkingLot(int noOfFloors, int noOfSpotsOnAFloor){
@@ -57,6 +60,7 @@ public class ParkingLotService {
                 spot.setParkingSpotStatus(ParkingSpotStatus.AVAILABLE);
                 spot.setParkingSpotTier(ParkingSpotTier.NORMAL);
                 spot = parkingSpotRepository.save(spot);
+                spots.add(spot);
             }
             floor.setParkingSpots(spots);
             floor = parkingFloorRepository.save(floor);
@@ -68,6 +72,30 @@ public class ParkingLotService {
         parkingLot.setAvailableSlots(capacity);
 
         return parkingLotRepository.save(parkingLot);
+    }
+
+    public void showParkingLot(ParkingLot parkingLot){
+        for(int i = 0 ; i<parkingLot.getParkingFloors().size();i++){
+            ParkingFloor floor = parkingLot.getParkingFloors().get(i);
+            System.out.println("FLOOR : "+ floor.getFloorNumber());
+            System.out.println("-----------------------------------");
+            for(ParkingSpot spot : floor.getParkingSpots()){
+                System.out.print("|");
+                if(spot.getParkingSpotStatus().equals(ParkingSpotStatus.TAKEN)){
+                    System.out.print("X");
+                }
+                else if(spot.getParkingSpotStatus().equals(ParkingSpotStatus.AVAILABLE)){
+                    System.out.print(" ");
+                } else{
+                    System.out.print("-");
+                }
+                System.out.print("| ");
+                System.out.print(" ");
+
+            }
+            System.out.println();
+            System.out.println("------------------------------------");
+        }
     }
 
 }
